@@ -16,4 +16,6 @@ for cordinate in [home, office]:
     folium.Marker( location=cordinate, popup=maker_name, icon=folium.Icon(color='green', icon="cloud") ).add_to(map)
 
 
+
+
 map.save('map.html')
