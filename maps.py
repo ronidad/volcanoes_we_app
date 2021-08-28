@@ -6,10 +6,21 @@ data = pd.read_csv("volcanoes.txt")
 lat= list(data["LAT"])
 lon = list(data["LON"])
 elev = list(data["ELEV"])
+name= list(data['NAME'])
 
-map = folium.Map([38.58,-99.89], zoom_start=6,tiles= "Stamen Terrain")
-for lt,ln,lv in zip(lat, lon,elev):
-    folium.Marker( location=[lt,ln], popup=str(lv), icon=folium.Icon(color='green', icon="cloud") ).add_to(map)
+
+def color_producer(elevation):
+    if elevation<1000:
+        return "green"
+    elif 1000<=elevation <=3000:
+        return "orange"
+    else:
+        return "red"
+
+
+map = folium.Map([34.7999992,-108.0009995], zoom_start=6,tiles= "Stamen Terrain",max_lat=33,max_lon=107,max_bounds=False)
+for lt,ln,lv,nm in zip(lat, lon,elev,name):
+    folium.Marker( location=[lt,ln], popup=str(lv)+ " meters " + nm, icon=folium.Icon(color=color_producer(lv), icon="cloud") ).add_to(map)
 map.save('maps.html')
 
 
