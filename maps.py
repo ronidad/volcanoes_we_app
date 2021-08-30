@@ -23,6 +23,8 @@ for lt,ln,lv,nm in zip(lat, lon,elev,name):
     folium.CircleMarker( location=[lt,ln], radius=6, popup=str(lv)+ " m " + nm, 
     fill_color= color_producer(lv), color="grey", fill_capacity=0.7).add_to(map)
 
-#folium.GeoJson(data=(open('json/world.json','r', encoding='UTF-8').read())).add_to(map)
+folium.GeoJson(data=(open('json_data/world.json','r', encoding="utf-8-sig").read())).add_to(map)
+
+
 map.save('maps.html')
 
