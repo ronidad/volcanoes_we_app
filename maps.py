@@ -18,12 +18,15 @@ def color_producer(elevation):
         return "red"
 
 
-map = folium.Map([34.7999992,-108.0009995], zoom_start=6,tiles= "Stamen Terrain",max_lat=33,max_lon=107,max_bounds=False)
+map = folium.Map([34.7999992,-108.0009995], zoom_start=6,tiles= "Stamen Terrain",
+        max_lat=33,max_lon=107,max_bounds=False)
 for lt,ln,lv,nm in zip(lat, lon,elev,name):
     folium.CircleMarker( location=[lt,ln], radius=6, popup=str(lv)+ " m " + nm, 
     fill_color= color_producer(lv), color="grey", fill_capacity=0.7).add_to(map)
 
-folium.GeoJson(data=(open('json_data/world.json','r', encoding="utf-8-sig").read())).add_to(map)
+folium.GeoJson(data=(open('json_data/world.json','r', encoding="utf-8-sig").read()),
+    style_function= lambda x:{"fillColor":"green" if x['properties']['POP2005']<10000000 
+    else "orange" if 10000000<= x['properties']['POP2005'] < 25000000 else "red"}).add_to(map)
 
 
 map.save('maps.html')
